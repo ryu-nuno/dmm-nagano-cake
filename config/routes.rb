@@ -13,4 +13,23 @@ Rails.application.routes.draw do
   root to: 'homes#top'
    #about
   get "/home/about" => "homes#about"
+
+  namespace :public do
+    resources :items
+    resources :customers
+    resources :orders
+    resources :addresses
+    resources :cart_items
+
+  end
+
+
+  namespace :admin do
+    resources :items
+    resources :genres
+    resources :customers
+    resources :orders
+    resources :order_items
+  end
+
 end

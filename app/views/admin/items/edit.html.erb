@@ -1,0 +1,41 @@
+<div class="container takasa">
+
+  <h2 class="edit-title">商品編集</h2>
+
+  <%= form_for @item,url: {action: "update"} do |f| %>
+  <!-- 画像選択欄 -->
+  <div class="row">
+    <div class="col-xs-4">
+      <%= attachment_image_tag @item, :image, size: "300x300",  fallback: "no_image.jpg"%><br>
+      <label>Image</label>
+      <%= f.attachment_field :image %>
+    </div>
+    <!-- 商品登録フォーム -->
+    <div class="col-xs-8">
+      <h4 class="edit-sukima">
+        <%= f.label :"商品名" ,class: "col-xs-3" %>
+        <%= f.text_field :name, class: "col-xs-8 " %>
+      </h4><br>
+      <h4 class="edit-sukima">
+        <%= f.label :"商品説明" ,class: "col-xs-3"%>
+        <%= f.text_area :introduction,size: "5x10", class: "col-xs-8",style:"margin-bottom:30px;" %>
+      </h4>
+      <h4 class="edit-sukima">
+        <%= f.label :"ジャンル" ,class: "col-xs-3 "%>
+        <%= f.collection_select :genre_id, Genre.all, :id, :name %>
+        <!-- f.collection_select(プロパティ名, オブジェクトの配列, value属性の項目, 表示テキストの項目) -->
+        <!-- Genre.allでジャンルのテーブル内情報を持ってきてる -->
+      </h4>
+      <h4 class="edit-sukima">
+        <%= f.label :"税別価格" ,class: "col-xs-3"%>
+        <%= f.text_field :price, class: "col-xs-5"%>円<br>
+      </h4>
+      <h4 class="edit-sukima">
+        <%= f.label :"販売ステータス" ,class: "col-xs-3" %>
+        <%= f.select :is_active,["販売中","販売停止"] ,class: "col-xs-8"%>
+      </h4>
+      <div class="text-right"><%= f.submit :変更を保存, class: "btn btn-primary" %><div>
+        <% end %>
+      </div>
+    </div>
+  </div>

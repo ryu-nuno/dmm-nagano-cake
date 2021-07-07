@@ -1,0 +1,39 @@
+<div class="containar">
+  <div class="row no-gutters">
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light p-4 mb-0">商品新規登録</h5>
+      <div class="form-body p-4">
+
+        <%= form_with model: @item,url: admin_items_path, local:true do |f| %>
+          <%= f.attachment_field :image, class: "w-100" %>
+
+        <div class="new-field">
+          <h4><%= f.label :商品名 ,class: "col-xs-3" %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name" ,class: "col-xs-8"%></h4>
+        </div>
+        <div class="new-field">
+          <h4><%= f.label :商品説明 ,class: "col-xs-3" %>
+          <%= f.text_area :introduction, autofocus: true, autocomplete: "introduction" ,class: "col-xs-8"%></h4>
+        </div>
+        <div class="new-field">
+          <h4><%= f.label :ジャンル ,class: "col-xs-3 fix" %>
+          <%= f.collection_select :genre_id, Genre.all, :id, :name %></h4>
+          <!-- f.collection_select(プロパティ名, オブジェクトの配列, value属性の項目, 表示テキストの項目) -->
+          <!-- Genre.allでジャンルのテーブル内情報を持ってきてる -->
+
+        </div>
+        <div class="new-field">
+          <h4><%= f.label :税抜価格 ,class: "col-xs-3 block"  %>
+          <%= f.text_field :price, autofocus: true, autocomplete: "price" ,class: "col-xs-8"%></h4>
+        </div>
+        <div class="new-field">
+          <h4><%= f.label :販売ステータス  ,class: "col-xs-3 fix" %>
+          <%= f.select :is_active, ["販売中", "販売停止"] ,class: "btn btn-primary"%></h4>
+        </div>
+        <div class="text-right"><%= f.submit "商品登録" ,class: "btn btn-primary"%></div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
