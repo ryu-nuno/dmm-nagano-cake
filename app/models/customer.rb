@@ -8,4 +8,8 @@ class Customer < ApplicationRecord
   has_many :cart_items
   has_many :addresses
   has_many :orders
+  
+  enum withdrawal_status: { 有効: 0, 無効: 1 }
+  
+  
 end

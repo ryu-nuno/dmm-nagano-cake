@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     resources :orders
     resources :addresses
     resources :cart_items
+    patch '/customers/whithdraw' => 'customers#destroy'
+    get '/customers/unsubscribe' => 'customers#unsubscribe'
 
   end
 

@@ -5,20 +5,18 @@
   <%= form_for @item,url: {action: "update"} do |f| %>
   <!-- 画像選択欄 -->
   <div class="row">
-    <div class="col-xs-4">
-      <%= attachment_image_tag @item, :image, size: "300x300",  fallback: "no_image.jpg"%><br>
-      <label>Image</label>
+    <div class="col-xs8">
+      <%= attachment_image_tag @item, :image %><br>
+      <label>商品画像</label>
       <%= f.attachment_field :image %>
-    </div>
     <!-- 商品登録フォーム -->
-    <div class="col-xs-8">
       <h4 class="edit-sukima">
         <%= f.label :"商品名" ,class: "col-xs-3" %>
         <%= f.text_field :name, class: "col-xs-8 " %>
       </h4><br>
       <h4 class="edit-sukima">
         <%= f.label :"商品説明" ,class: "col-xs-3"%>
-        <%= f.text_area :introduction,size: "5x10", class: "col-xs-8",style:"margin-bottom:30px;" %>
+        <%= f.text_area :introduction, class: "col-xs-8" %>
       </h4>
       <h4 class="edit-sukima">
         <%= f.label :"ジャンル" ,class: "col-xs-3 "%>

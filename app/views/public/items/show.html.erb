@@ -1,0 +1,30 @@
+<div class="container takasa">
+  <div class="row">
+    <!-- ジャンル検索バー -->
+  	<%#= render "public/shared/sidebar", genres: @genres %>
+
+  	<div class="col-xs-9">
+  	  <div class="row" style="margin-top: 50px;">
+  	  	<div style="float: left; margin: 15px 50px;">
+          <%= attachment_image_tag @item, :image, size: "300x300", fallback: "no_image.jpg" %>
+        </div>
+  	  	<div style="width:400px; height:300px; float:left;">
+  	  	  <h3><%= @item.name %></h3><br>
+  	  	  <p><%= @item.introduction %></p>
+  	  	  <p class="price">¥<%= (@item.price*1.1).floor %><span style="font-size:12px;">（税込）</span></p>
+  	  	</div>
+  	  </div>
+      <div class="col-xs-7">
+        <%#= image_tag "wasabichan_in_car.jpg", class:"wasabichan" %><%#= image_tag "wasabi_in_car2.jpg", class:"wasabichan2" %>
+      </div>
+      <div class="col-xs-5">
+      <strong class="error"><%= notice %></strong>
+        <%= form_for @cart_item, url: public_cart_items_path(@cart_item) do |f| %>
+        <%= f.hidden_field :item_id  , :value => @item.id%>
+        <%= f.select :amount, options_for_select((1..20).to_a), include_blank: "個数選択" %>
+        <%= f.submit "カートに入れる" ,class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+  	</div>
+  </div>
+</div>

@@ -24,7 +24,7 @@
     <!-- 会員でログインしている時 -->
       <% if customer_signed_in? %>
         <li id="youkoso">ようこそ、<%= current_customer.last_name %>さん！</li>
-        <li><%= link_to public_customers_path do %><div class="fas fa-user"></div>マイページ<% end %></li>
+        <li><%= link_to public_customers_path(current_customer) do %><div class="fas fa-user"></div>マイページ<% end %></li>
         <li><%= link_to public_items_path do %><div class="fas fa-cookie-bite"></div>商品一覧<% end %></li>
         <li><%= link_to public_cart_items_path do %><div class="icon-flex"><i class="icon-count text-center"><%= current_customer.cart_items.count %></i></div><i class="cart">カート</i><% end %></li>
         <li><%= link_to destroy_customer_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i>ログアウト<% end %></li>
@@ -44,13 +44,13 @@
         <li><%= link_to new_customer_registration_path do %><i class="fas fa-user-plus"></i>新規登録<% end %></li>
         <li><%= link_to new_customer_session_path do %><i class="fas fa-sign-in-alt"></i>ログイン<% end %></li>
       <% end %>
-      
+
       </ul>
           </div>
         </div>
       </nav>
     </header>
-    
+
     <%= yield %>
   </body>
 </html>
