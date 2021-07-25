@@ -1,0 +1,70 @@
+<main>
+  <div class= "container">
+    <div class="row">
+      <div class="col-lg-10">
+
+
+
+<h1>注文情報入力</h1>
+
+    <%= form_with model: @order ,url: public_orders_confirm_path , local:true do |f| %>
+    <dl>
+        <dt>支払方法</dt>
+            <dd>
+              <%= f.radio_button :payment_method, "クレジットカード" %>
+              <%= f.label :payment_method, "クレジットカード", { style: "display: inline-block;"} %>
+            </dd>
+            <dd>
+              <%= f.radio_button :payment_method, "銀行振込"%>
+              <%= f.label :payment_method, "銀行振込", { style: "display: inline-block;"} %>
+            </dd>
+
+        <dt>お届け先</dt>
+          <dd>
+            <label>ご自身の住所</label>
+            <%= f.radio_button :address_type, 0 %>
+          </dd>
+          <dd><%= current_customer.postal_code+current_customer.address %></dd>
+          <dd><%= current_customer.first_name+current_customer.last_name %></dd>
+          <dd>
+            <label>登録済住所から選択 </label>
+            <%= f.radio_button :address_type, 1%>
+          </dd>
+
+          <dd><%= f.collection_select :address, current_customer.addresses, :id, :address, include_blank: "選択して下さい"  %></dd>
+          <dd>
+            <label>新しいお届け先</label>
+            <%= f.radio_button :address_type, 2%>
+          </dd>
+      </dd>
+
+
+      <table>
+        <rr>
+         <div class="field">
+            <th><%= f.label :postal_code %></th>
+            <th><%= f.text_field :new_postal_code, autofocus: true, autocomplete: "00000" %></th>
+          </div>
+        </tr>
+        <tr>
+         <div class="field">
+            <th><%= f.label :address %></th>
+            <th><%= f.text_field :new_address, autofocus: true, autocomplete: "東京都渋⾕区代々⽊神園町0-0" %></th>
+          </div>
+        </tr>
+        <tr>
+          <div class="field">
+            <th><%= f.label :name %></th>
+            <th><%= f.text_field :new_name, autofocus: true, autocomplete: "00000" %></th>
+          </div>
+        </tr>
+      </dl>
+      </table>
+          <%= f.submit "確認画面へ進む"%>
+    <%end%>
+
+    <%#= link_to "注文内容を確認する", confirm_path, method: :post %>
+      </div>
+    </div>
+  </div>
+</main>
