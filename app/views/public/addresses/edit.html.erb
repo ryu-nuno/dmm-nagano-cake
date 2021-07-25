@@ -1,20 +1,20 @@
-<div class="container takasa">
-  <h2><i class="fas fa-truck"></i>配送先住所編集</h2><br>
-    <%= form_for @address, url:public_address_path(@address), method: :patch do |f| %>
-      <div class="field address">
-        <%= f.label :郵便番号 %><br />
-        <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %>
-      </div><br>
-      <div class="field address">
-        <%= f.label :住所 %><br />
-        <%= f.text_field :address, autofocus: true, autocomplete: "address" %>
-      </div><br>
-      <div class="field address">
-        <%= f.label :宛名 %><br />
-        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-      </div><br>
-      <div class="field">
-      <%= f.submit "編集する", class:"btn btn-primary" %>
-      </div>
+<main>
+  <div class="container">
+    <% if @address.errors.any? %>
+      <%= @address.errors.count %>件のエラーが発生しました
+      <% @address.errors.full_messages.each do |message| %>
+        <%= message %>
       <% end %>
-</div>
+    <% end %>
+    <h4>配送先編集</h4>
+    <%= form_with model:@address,url: address_path, local:true do |f|%>
+      <h6>郵便番号(ハイフンなし)</h6>
+      <%= f.text_field :postal_code%>
+      <h6>住所</h6>
+      <%= f.text_field :address%>
+      <h6>宛名</h6>
+      <%= f.text_field :name%>
+      <%= f.submit '変更内容を保存',class:"btn btn-success"%>
+    <%end%>
+  </div>
+</main>

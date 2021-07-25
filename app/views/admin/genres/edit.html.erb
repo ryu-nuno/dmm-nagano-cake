@@ -1,16 +1,16 @@
-<div class="container takasa">
-  <div class="row">
-
-    <div class="col-xs-9">
-      <h2>ジャンル編集</h2><br>
-
-      <!-- ジャンル用form_forで記載する時削除 -->
-       <%= form_for @genre, url: admin_genre_path(@genre.id) do |f| %>
-        <div class="field row">
-          <lavel>ジャンル</lavel>
-          <%= f.text_field :name %>
-          <%= f.submit "変更を保存する", class: "btn btn-primary" %>
-         </div>
+<main>
+  <div class="container">
+    <% if @genre.errors.any? %>
+      <%= @genre.errors.count %>件のエラーが発生しました
+      <% @genre.errors.full_messages.each do |message| %>
+        <%= message %>
       <% end %>
+    <% end %>
+    <h3>ジャンル編集</h3>
+    <%= form_with model:@genre,url: admin_genre_path, local:true do |f| %>
+      <%= f.label :ジャンル名 %>
+      <%= f.text_field :name %>
+      <%= f.submit '変更を保存', class: "btn btn-success" %>
+    <%end%>
   </div>
-</div>
+</main>

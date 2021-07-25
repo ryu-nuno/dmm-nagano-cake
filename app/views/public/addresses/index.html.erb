@@ -1,52 +1,45 @@
-<div class="container takasa">
-	<h2><i class="fas fa-truck"></i>配送先登録/一覧</h2><br>
-
-    <%= form_for @address, url:public_addresses_path, method: :post do |f| %>
-    <div class="row">
-      <div class="col-xs-1">
-        <%= f.label :郵便番号 %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %>
-      </div>
-      <div class="col-xs-1">
-        <%= f.label :住所 %>
-      </div>
-      <div class="col-xs-4">
-        <%= f.text_field :address, autofocus: true, autocomplete: "address", :size => "40*40" %>
-      </div>
-      <div class="col-xs-1">
-        <%= f.label :宛名 %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-      </div>
-      <div class="col-xs-1">
-      <%= f.submit "登録する", class:"btn btn-primary" %>
-      </div>
+<main>
+  <div class="container">
+    <% if @address.errors.any? %>
+      <%= @address.errors.count %>件のエラーが発生しました
+      <% @address.errors.full_messages.each do |message| %>
+        <%= message %>
       <% end %>
-    </div>
-
-     <table  class="table table-bordered">
+    <% end %>
+    <h3>配送先登録/一覧</h3>
+    <%= form_with model:@address,url: addresses_path, local:true do |f| %>
+      <h6>郵便番号(ハイフンなし)</h6>
+    　<%= f.text_field :postal_code %>
+    　<h6>住所</h6>
+    　<%= f.text_field :address%>
+    　<h6>宛名</h6>
+    　<%= f.text_field :name%>
+      <%= f.submit '新規登録',class:"btn btn-success"%>
+    <% end %>
+    <table class="table table-bordered">
+      <tr>
+        <th>郵便番号</th>
+        <th>住所</th>
+        <th>宛名</th>
+        <th></th>
+      </tr>
+      <%@addresses. each do |address| %>
         <tr>
-            <th>郵便番号</th>
-            <th>住所</th>
-            <th>宛名</th>
-            <th></th>
+          <td>
+            <%= address.postal_code%>
+          </td>
+          <td>
+            <%= address.address%>
+          </td>
+          <td>
+            <%= address.name%>
+          </td>
+          <td>
+            <%= link_to '編集する',edit_address_path(address.id),class: "btn btn-success"%>
+            <%= link_to '削除する',address_path(address.id),method: :delete, class: "btn btn-danger" %>
+          </td>
         </tr>
-        <% @addresses.each do |address| %>
-        <tr>
-            <td><%= address.postal_code %></td>
-            <td><%= address.address %></td>
-            <td><%= address.name %></td>
-            <td>
-                <!--id必要  edit_public_address_path-->
-                <%= link_to "編集する", edit_public_address_path(address),method: :get , class: "btn btn-primary" %>　　<%= link_to "削除する", public_address_path(address), method: :delete , class: "btn btn-danger" %><!-- pathにid必要 public_address_path-->
-            </td>
-        </tr>
-        <% end %>
-      </table>
-      <div class="col-xs-6 col-xs-offset-4 ">
-          <%#= paginate @addresses %>
-      </div><!-- ページネーション用記載.コントローラに何項目ごとにページを分けるか記載 -->
-</div>
+      <%end%>
+    </table>
+  </div>
+</main>

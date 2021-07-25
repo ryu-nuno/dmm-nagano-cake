@@ -1,75 +1,72 @@
 <main>
-  <div class= "container">
+  <div class="container">
+  <h3>注文履歴詳細</h3>
+  <% @sum = 0 %>
     <div class="row">
-      <div class="col-sm-6 col-md-6 col-lg-6 px-5 px-sm-0 mx-auto">
-        <h4>注文履歴詳細</h4>
-          <table class="table">
-            <tr>
-              <th>注文日</th>
-              <th><%= @order.created_at %></th>
-            </tr>
-            <tr>
-              <th>配送先</th>
-              <th>
-                <%= @order.postal_code %>
-                <%= @order.address%>
-                <%= @order.name%>
-              </th>
-            </tr>
-            <tr>
-              <th>支払方法</th>
-              <th><%= @order.payment_method %></th>
-            </tr>
-            <tr>
-              <th>ステータス</th>
-              <th><%= @order.status%></th>
-            </tr>
-          </table>
-        </div>
-        <div class="col-sm-3 col-md-3 col-lg-3">
-          <h4>請求情報</h4>
-            <table class="table">
-              <tr>
-                <% @order.order_details.each { |order| @total += order.item.price*order.amount } %>
-                <th>商品合計</th>
-                <th><%= (@total.*1.1).floor%></th>
-              </tr>
-              <tr>
-                <th>配送料</th>
-                <th><%= @shipping_cost%></th>
-              </tr>
-              <tr>
-                <th>ご請求額</th>
-                <th><%= (@total*1.1+@shipping_cost).floor%></th>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-8 col-md-8 col-lg-8 px-5 px-sm-0 mx-auto">
-            <h4>注文内容</h4>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>商品</th>
-                    <th>単価（税込）</th>
-                    <th>個数</th>
-                    <th>小計</th>
-                  </tr>
-                </thead>
-                <tbody>
+      <h6>注文情報</h6>
+      <table class="table table-bordered">
+        <tr>
+          <th>注文日</th>
+          <td><%= @order.created_at.strftime('%Y/%m/%d')%></td>
+        </tr>
+        <tr>
+          <th>配送先</th>
+          <td>
+            <li>
+              〒<%= @order.postal_code%>
+            </li>
+            <li>
+              <%= @order.address%>
+            </li>
+            <li>
+              <%= @order.name%>
+            </li>
+          </td>
+        </tr>
+        <tr>
+          <th>支払方法</th>
+          <td><%= @order.payment_method%></td>
+        </tr>
+        <tr>
+          <th>ステータス</th>
+          <td>-</td>
+        </tr>
+      </table>
 
-                    <% @order_items.each do |order_item| %>
-                    <tr>
-                      <td><%= order_item.item.name %></td>
-                      <td><%= (order_item.item.price*1.1).floor %></td>
-                      <td><%= order_item.amount %></td>
-                      <td><%= (order_item.item.price*1.1*order_item.amount).floor %></td>
-                    </tr>
-                    <% end %>
-                </tbody>
-              </table>
-      </div>
+      <h6>注文内容</h6>
+      <table class="table table-bordered">
+        <tr>
+          <th>商品名</th>
+          <th>単価(税込)</th>
+          <th>個数</th>
+          <th>小計</th>
+        </tr>
+        <%@order.order_details.each do |order_detail|%>
+        <% @sum += order_detail.amount * order_detail.item.price %>
+          <tr>
+            <td><%= order_detail.item.name%></td>
+            <td><%= order_detail.item.price.to_s(:delimited)%></td>
+            <td><%= order_detail.amount%></td>
+            <td><%= (order_detail.amount * order_detail.item.price).to_s(:delimited) %></td>
+          </tr>
+        <%end%>
+      </table>
+
+      <h6>請求情報</h6>
+      <table class="table table-bordered">
+        <tr>
+          <th>商品合計</th>
+          <td><%= @sum.to_s(:delimited) %>円</td>
+        </tr>
+        <tr>
+          <th>配送料</th>
+          <td><%=800%>円</td>
+        </tr>
+        <tr>
+          <th>御請求額</th>
+          <td><%= (@sum+800).to_s(:delimited)%>円</td>
+        </tr>
+      </table>
     </div>
   </div>
 </main>

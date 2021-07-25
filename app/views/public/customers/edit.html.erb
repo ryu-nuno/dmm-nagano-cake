@@ -1,84 +1,58 @@
-<div class="container takasa">
+<main>
+  <div class="container">
+    <h2>会員情報編集</h2>
+    <% if @customer.errors.any? %>
+      <%= @customer.errors.count %>件のエラーが発生しました
+      <% @customer.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+    <% end %>
 
-  <h2><i class="fas fa-user-edit"></i>登録情報編集</h2><br>
+    <%= form_with model:@customer, url:customers_path(current_customer), local:true do |f|%>
+      <table>
+        <tr>
+          <th>
+            <h6>氏名</h6>
+            <%= f.text_field :first_name%><%= f.text_field :last_name%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>フリガナ</h6>
+            <%= f.text_field :first_name_kana%><%= f.text_field :last_name_kana%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>郵便番号</h6>
+            <%= f.text_field :postal_code%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>住所</h6>
+            <%= f.text_field :address%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>電話番号</h6>
+            <%= f.text_field :telephone_number%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>メールアドレス</h6>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </th>
+        </tr>
 
-    <%= form_for (@customer), url:public_customers_path do |f| %>
-    <div class="row user_edit">
+      </table>
 
-
-      <div class="col-xs-2">
-        <%= f.label :"名前" %>
+      <div class="actions">
+        <%= f.submit "変更内容を保存",class: "btn btn-success" %>
       </div>
-      <div class="col-xs-1">
-        <%= f.label :"（姓）" %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :last_name %>
-      </div>
-      <div class="col-xs-1">
-        <%= f.label :"（名）" %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :first_name %>
-      </div>
-    </div>
-    <div class="row user_edit">
-      <div class="col-xs-2">
-        <%= f.label :"フリガナ" %>
-      </div>
-      <div class="col-xs-1">
-        <%= f.label :"（セイ）" %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :last_name_kana %>
-      </div>
-      <div class="col-xs-1">
-        <%= f.label :"（メイ）" %>
-      </div>
-      <div class="col-xs-2">
-        <%= f.text_field :first_name_kana %>
-      </div>
-    </div>
-    <div class="row user_edit">
-        <div class="col-xs-3">
-            <%= f.label :"メールアドレス" %>
-        </div>
-        <div class="col-xs-3">
-            <%= f.email_field :email %>
-        </div>
-    </div>
-    <div class="row user_edit">
-      <div class="col-xs-3">
-        <%= f.label :"電話番号" %>
-      </div>
-      <div class="col-xs-3">
-        <%= f.text_field :telephone_number %>
-      </div>
-    </div>
-    <div class="row user_edit">
-      <div class="col-xs-3">
-        <%= f.label :郵便番号 %>
-      </div>
-      <div class="col-xs-3">
-        <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %>
-      </div>
-    </div>
-    <div class="row user_edit">
-      <div class="col-xs-3">
-        <%= f.label :住所 %>
-      </div>
-      <div class="col-xs-5">
-        <%= f.text_field :address, autofocus: true, autocomplete: "address", :size => "50"%>
-      </div>
-    </div>
-
-    <div class="row user_edit">
-      <div class="col-xs-3">
-        <%= f.submit "編集内容を保存" ,class:"btn btn-primary" %>
-        <% end %>
-      </div>
-      <div class="col-xs-3">
-        <%=button_to "退会する", public_customers_unsubscribe_path, method: :get, class: "btn btn-danger" %>
-      </div>
-    </div>
-</div>
+    <% end %>
+    <%=link_to '退会する', customers_unsubscribe_path, class: 'btn btn-danger'%>
+  </div>
+</main>

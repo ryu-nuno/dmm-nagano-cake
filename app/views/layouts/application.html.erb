@@ -1,56 +1,115 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NaganoCake</title>
+    <title>NAGANOCAKE</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/454b157adc.js" crossorigin="anonymous"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="d-flex flex-column vh-100">
-    <header class="shadow-sm">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-          <a class="navbar-brand p-3" href="/"><%= image_tag('logo.png') %></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
+  <body>
+    <header class="border-bottom">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href='/'>
+          <%= image_tag 'logomark.jpg',  class:"logomark" %>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <!-- 会員でログインしている時 -->
-      <% if customer_signed_in? %>
-        <li id="youkoso">ようこそ、<%= current_customer.last_name %>さん！</li>
-        <li><%= link_to public_customers_path(current_customer) do %><div class="fas fa-user"></div>マイページ<% end %></li>
-        <li><%= link_to public_items_path do %><div class="fas fa-cookie-bite"></div> 商品一覧<% end %></li>
-        <li><%= link_to public_cart_items_path do %><div class="icon-flex"><i class="icon-count text-center"> <%= current_customer.cart_items.count %></i></div><i class="cart">カート</i><% end %></li>
-        <li><%= link_to destroy_customer_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i> ログアウト<% end %></li>
-
-      <!-- 管理者でログインしている時 -->
-      <% elsif admin_signed_in?%>
-        <li><%= link_to ' 商品一覧', admin_items_path %></li>
-        <li><%= link_to '  会員一覧', admin_customers_path %></li>
-        <li><%= link_to '  注文履歴一覧', admin_orders_path %></li>
-        <li><%= link_to '  ジャンル一覧', admin_genres_path %></li>
-        <li><%= link_to '  ログアウト', destroy_admin_session_path, method: :delete %></li>
-
-      <!-- ログインしていない時 -->
-      <% else %>
-        <li><%= link_to public_items_path do %><i class="fas fa-cookie-bite"></i> 商品一覧<% end %></li>
-        <li><%= link_to home_about_path do %><i class="fas fa-building"></i> About<% end %></li>
-        <li><%= link_to new_customer_registration_path do %><i class="fas fa-user-plus"></i> 新規登録<% end %></li>
-        <li><%= link_to new_customer_session_path do %><i class="fas fa-sign-in-alt"></i> ログイン<% end %></li>
-      <% end %>
-
-      </ul>
-          </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <div class="container">
+              <div class="row">
+                <%if customer_signed_in?%>
+                　<div class="col">
+                    <li>
+                      ようこそ、<%= current_customer.first_name%>さん！
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'マイページ', customers_my_page_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '商品一覧', items_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'カート', cart_items_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'ログアウト', customers_sign_out_path, method: :delete, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                <%elsif admin_signed_in?%>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '商品一覧', admin_items_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '会員一覧', admin_customers_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '注文履歴一覧', admin_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'ジャンル一覧', admin_genres_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search未実装" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                <%else%>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'About', about_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '商品一覧', items_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to '新規登録', customers_sign_up_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                  <div class="col my-2">
+                    <li>
+                      <%= link_to 'ログイン', customers_sign_in_path, class: "btn btn-outline-secondary" %>
+                    </li>
+                  </div>
+                <%end%>
+              </div>
+            </div>
+          </ul>
         </div>
       </nav>
     </header>
-
+    <%= render 'layouts/flash'%>
     <%= yield %>
+    <footer class="border-top"></footer>
   </body>
 </html>

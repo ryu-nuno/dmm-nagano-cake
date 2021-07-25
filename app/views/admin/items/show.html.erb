@@ -1,37 +1,49 @@
-<div class="container takasa　my-5">
-  <h2>商品詳細</h2><br>
-  <div class="row">
-    <!-- 画像選択欄 -->
-    <div class="col-xs-4">
-      <%= attachment_image_tag @item, :image, size: "300x300", fallback: "no_image.jpg"%><br>
-    </div>
-
-    <!-- 商品登録フォーム -->
-    <div class="col-xs-8">
-      <h4 style="margin-bottom: 30px;">商品名
-        <%= @item.name %>
-      </h4>
-
-      <div style="display: flex;">
-        <h4 style="margin: 0 30px 30px 0;">商品説明</h4>
-        <div style="overflow-wrap: break-word;　word-wrap: break-word; width: 300px;">
+<main>
+  <div class="container">
+    <h3>商品詳細</h3>
+    <%= attachment_image_tag @item, :image %>
+    <table class="table table-borderless">
+      <tr>
+        <th>
+          商品名
+        </th>
+        <td>
+          <%= @item.name %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          商品説明
+        </th>
+        <td>
           <%= @item.introduction %>
-        </div>
-      </div>
-
-        <h4 style="margin-bottom: 30px;">ジャンル
-          <%= @item.genre.name %>
-        </h4>
-
-        <h4 style="margin-bottom: 30px;">税別価格
-          <%= @item.price %>円
-        </h4>
-
-        <h4 style="margin-bottom: 30px;">販売ステータス
-          <%= @item.is_active %>
-        </h4>
-
-        <%= link_to '編集する',edit_admin_item_path(@item.id), method: :get ,class: "btn btn-primary ", style: "margin-left:70%;"%>
-    </div>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          ジャンル
+        </th>
+        <td>
+          <%= @genre.name %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          税込価格(税抜価格)
+        </th>
+        <td>
+          <%= @item.add_tax_price.to_s(:delimited) %>(<%= @item.price %>)円
+        </td>
+      </tr>
+      <tr>
+        <th>
+          販売ステータス
+        </th>
+        <td>
+          -
+        </td>
+      </tr>
+    </table>
+    <%= link_to '編集する',edit_admin_item_path, class:"btn btn-success" %>
   </div>
-</div>
+</main>

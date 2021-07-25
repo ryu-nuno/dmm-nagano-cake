@@ -1,8 +1,4 @@
 class Genre < ApplicationRecord
-
-  has_many :items
-
-  enum valid_invalid_status: { 有効: 0, 無効: 1}
-
+  has_many :items, dependent: :destroy
   validates :name, presence: true
 end
